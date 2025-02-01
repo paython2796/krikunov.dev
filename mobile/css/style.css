@@ -71,7 +71,7 @@ body {
 }
 
 .menu ul {
-  display: flex;
+  display: fixed;
   justify-content: space-between;
   align-items: center;
   margin-right: 20px;
@@ -116,6 +116,3 @@ footer p {
   font-size: 30px !important;
   margin: 0 auto 10px 42%;
 }
-
-
-
