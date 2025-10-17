@@ -2,22 +2,138 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/portfolio.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="shortcut icon" href="imgs/icon.jpg" type="image/x-icon">
-    <title>krikunov.dev</title>
-<style>
-	body, html {
-	  height: 100%;
-	  margin: 0;
-	  font: 400 15px/1.8 "Lato", sans-serif;
-	  color: #777;
-	}
-</style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/portfolio.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="imgs/icon.jpg" type="image/x-icon">
+    <title>krikunov.dev - Portfolio</title>
+
+    <style>
+        /* Base Styles (copied from your original to keep the context) */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font: 400 15px/1.8 "Lato", sans-serif;
+            color: #777;
+        }
+
+        /* Portfolio Grid and Lightbox Styles - WITH FORCEFUL OVERRIDES */
+        /* ----------------------------------------------------------- */
+
+        /* FIX 1: Outer container for the gallery */
+        .nk-gallery-wrapper {
+            /* Force the wrapper to take up space below the fixed menu */
+            padding: 90px 20px 20px 20px !important; 
+            max-width: 1300px !important; 
+            width: 100% !important;
+            margin: 5% auto 0 auto !important; 
+            /* REINSTATED: Semi-transparent black background */
+            background-color: rgba(0, 0, 0, 0.5) !important; 
+            border-radius: 10px;
+        }
+
+        /* FIX 2: Portfolio Grid Layout - Force width and multi-column display */
+        .nk-gallery-grid {
+            width: 100% !important; 
+            box-sizing: border-box !important;
+            display: grid !important;
+            /* Auto-fit columns: Ensure multiple columns appear */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; 
+            gap: 20px !important; 
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        /* FIX 3: Reset styling for the title wrapper */
+        .nk-content-header {
+            width: 100%;
+            padding: 0 20px;
+            margin-bottom: 30px; 
+        }
+        
+        .name {
+            /* Override external margin and color to fit the current design */
+            margin: 0 !important;
+            color: #9FA07F !important;
+        }
+        
+        /* Portfolio Item Container: Provides aspect ratio and hover effects */
+        .nk-gallery-item {
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+            border-radius: 5px;
+            padding-bottom: 75%; 
+            background-color: #253030;  
+            cursor: pointer;
+        }
+
+        /* Image Styling: Ensures images fill the container */
+        .nk-gallery-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            display: block;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nk-gallery-item:hover img {
+            transform: scale(1.05); 
+        }
+
+        /* Caption Styling */
+        .nk-gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7); 
+            color: #ccc; 
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+
+        .nk-gallery-item:hover .nk-gallery-caption {
+            opacity: 1;
+        }
+        
+        /* Lightbox Styles */
+        #nk-lightbox {
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        #nk-lightbox.active {
+            display: flex;
+        }
+
+        #nk-lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 5px solid white;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
+            object-fit: contain; 
+        }
+    </style>
 </head>
 
 <body style="background: url(imgs/main.jpg); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; background-color: #253030;">
@@ -28,8 +144,7 @@
 	  <h1 class="title">Nick Krikunov</h1>
 	  <div id="myLinks">
         <a class="a" href="https://myw0rld.github.io/krikunov.dev/mobile/">Home</a>
-		<a class="a" href="portfolio">Portfolio</a>
-		<a class="a" href="bio">Bio</a>
+		<a class="active" href="portfolio">Portfolio</a> <a class="a" href="bio">Bio</a>
 		<a class="a" href="contact">Contact</a>
 	  </div>
 	    <a href="javascript:void(0);" class="icon" onclick="myFunction()"><i class="fa fa-bars"></i></a>
@@ -37,43 +152,139 @@
     </nav>
 </div>
 
-<form>
-	<h2 class="name">My Photo Gallery</h2>
-	<div class="row">
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/13.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/12.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/11.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/10.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/9.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/8.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/7.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/6.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/5.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/4.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/3.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/2.jpg"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/x.jpg" style="display: none;"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/x.jpg" style="display: none;"></div>
-		<div class="photo"><img loading="lazy" src="imgs/portfolio/1.jpg"></div>
-	</div>
-	<!-- <div class="page-selector">
-	
-		<a class="page-active">1</a>
-		<a class="page" href="portfolio2.html">2</a>
-		<a class="page" href="portfolio3.html">3</a>
-		<a class="page" href="portfolio4.html">4</a>
-		
-		<a class="page" href="portfolio2.html" style="margint: 0 20px;">Next Page ></a>
-	</div> -->
-</form>
+<div class="nk-gallery-wrapper">
 
+    <div class="nk-content-header">
+        <h2 class="name">My Photo Gallery</h2>
+    </div>
+    
+    <main class="nk-gallery-grid">
+        
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/main.jpg" alt="Gallery Introduction Image">
+            <div class="nk-gallery-caption">Welcome to my Gallery</div>
+        </div>
+        
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/13.jpg" alt="Abstract city lights reflection">
+            <div class="nk-gallery-caption">City Reflections</div>
+        </div>
 
-	<footer style="margin-top: auto;">
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/12.jpg" alt="Night-time street photography">
+            <div class="nk-gallery-caption">Urban Night</div>
+        </div>
+
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/11.jpg" alt="A portrait shot">
+            <div class="nk-gallery-caption">Portrait</div>
+        </div>
+
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/10.jpg" alt="A shot of a building structure">
+            <div class="nk-gallery-caption">Architecture</div>
+        </div>
+
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/9.jpg" alt="Nature close-up">
+            <div class="nk-gallery-caption">Green Macro</div>
+        </div>
+
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/8.jpg" alt="Landscape vista">
+            <div class="nk-gallery-caption">Landscape</div>
+        </div>
+
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/7.jpg" alt="Black and white street scene">
+            <div class="nk-gallery-caption">Monochrome</div>
+        </div>
+
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/6.jpg" alt="A colorful sunset">
+            <div class="nk-gallery-caption">Sunset</div>
+        </div>
+        
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/5.jpg" alt="Photo 5 description">
+            <div class="nk-gallery-caption">Category 5</div>
+        </div>
+        
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/4.jpg" alt="Photo 4 description">
+            <div class="nk-gallery-caption">Category 4</div>
+        </div>
+        
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/3.jpg" alt="Photo 3 description">
+            <div class="nk-gallery-caption">Category 3</div>
+        </div>
+        
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/2.jpg" alt="Photo 2 description">
+            <div class="nk-gallery-caption">Category 2</div>
+        </div>
+        
+        <div class="nk-gallery-item">
+            <img loading="lazy" src="imgs/portfolio/1.jpg" alt="Photo 1 description">
+            <div class="nk-gallery-caption">Category 1</div>
+        </div>
+        
+    </main>
+</div>
+<footer style="margin-top: auto;">
 		<a href="mailto:paython2796@gmail.com" class="fa fa-mail" target="_blank">✉</a>
 		<a href="https://www.linkedin.com/in/nikita-krikunov/" class="fa fa-linkedin" target="_blank"></a>
 		<p>©Nikita Krikunov</p>
 	</footer>
 	<script src="java.js"></script>
 	<script src="menu.js"></script>
+
+    <script>
+        function setupLightbox() {
+            // Select only the images that are inside the new grid
+            const portfolioImages = document.querySelectorAll('.nk-gallery-grid .nk-gallery-item img');
+            
+            // Create the main lightbox element once (using new ID)
+            const lightbox = document.createElement('div');
+            lightbox.id = 'nk-lightbox';
+            document.body.appendChild(lightbox);
+
+            // Add click listener to each image
+            portfolioImages.forEach(image => {
+                image.addEventListener('click', e => {
+                    e.preventDefault(); 
+                    e.stopPropagation();
+
+                    lightbox.classList.add('active'); 
+
+                    lightbox.innerHTML = ''; 
+
+                    // Create a copy of the clicked image for the lightbox view
+                    const clickedImage = document.createElement('img');
+                    clickedImage.src = image.src;
+                    clickedImage.alt = image.alt;
+                    
+                    lightbox.appendChild(clickedImage);
+                });
+            });
+
+            // Close the lightbox when the dark background is clicked (using new ID)
+            lightbox.addEventListener('click', e => {
+                if (e.target.id === 'nk-lightbox') {
+                    lightbox.classList.remove('active'); 
+                }
+            });
+            
+            // Optional: Close lightbox with the ESC key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape" && lightbox.classList.contains('active')) {
+                    lightbox.classList.remove('active');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', setupLightbox);
+    </script>
 </body>
 </html>
