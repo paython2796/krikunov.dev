@@ -42,6 +42,7 @@ body {
 	z-index: 100;
 	background: #253030;
 	position: fixed;
+	padding-bottom: 5px;
 	
 }
 
@@ -116,3 +117,4 @@ footer p {
   font-size: 30px !important;
   margin: 0 auto 10px 42%;
 }
+
