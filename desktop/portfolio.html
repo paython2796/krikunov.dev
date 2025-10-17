@@ -1,68 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/portfolio.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="shortcut icon" href="imgs/icon.jpg" type="image/x-icon">
-    <title>krikunov.dev</title>
-
-    <style>
+<style>
+        /* Base Styles (from your original code) */
         body, html {
             height: 100%;
             margin: 0;
             font: 400 15px/1.8 "Lato", sans-serif;
             color: #777;
         }
-    </style>
 
-    <style>
-        /* Portfolio Grid Layout: Replacing your existing 'row' class for better responsiveness */
-        .portfolio-grid {
-            display: grid;
-            /* Auto-fit columns, min size 300px, but you can adjust this number */
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            margin: 0 auto;
+        /* FIX 1: Ensure the outer container allows full width and centering */
+        /* This div wraps your gallery content */
+        .gallery-container {
+            padding: 20px; 
+            max-width: 1200px; /* Limits max width on huge screens, adjust or remove if needed */
+            margin: 0 auto; 
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
-        /* Portfolio Item Container */
+        /* FIX 2: Portfolio Grid Layout - The core fix for width and columns */
+        .portfolio-grid {
+            /* IMPORTANT: Use !important to override external file constraints */
+            width: 100% !important; 
+            box-sizing: border-box !important;
+
+            display: grid;
+            /* Auto-fit columns: This line ensures multiple columns appear */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important; 
+            gap: 20px;
+            padding: 0; /* Removed padding here to prevent double padding with container */
+            margin: 0;
+        }
+
+        /* Portfolio Item Container: Provides aspect ratio and hover effects */
         .portfolio-item {
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Slightly darker shadow for visibility on dark background */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
             border-radius: 5px;
-            /* Placeholder sizing to prevent layout shift (CLS) */
-            padding-bottom: 75%; /* Assuming a 4:3 aspect ratio (adjust this if your photos are 1:1 or 16:9) */
-            background-color: #444; /* Darker placeholder color */
-            cursor: pointer; /* Indicate clickability for lightbox */
+            /* Placeholder sizing to prevent layout shift (CLS). */
+            padding-bottom: 75%; 
+            background-color: #444; 
+            cursor: pointer;
         }
 
-        /* Image Styling */
+        /* Image Styling: Ensures images fill the container */
         .portfolio-item img {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures images cover the area without distortion */
+            object-fit: cover; 
             display: block;
             transition: transform 0.3s ease-in-out;
         }
 
         .portfolio-item:hover img {
-            transform: scale(1.05); /* Subtle zoom effect */
+            transform: scale(1.05); 
         }
 
-        /* Lightbox Styles (Needed for script) */
+        /* Caption Styling */
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7); 
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+
+        .portfolio-item:hover .caption {
+            opacity: 1;
+        }
+        
+        /* Lightbox Styles: Full-screen popup for viewing the image */
         #lightbox {
             position: fixed;
-            z-index: 2000; /* Ensure it's on top of everything, including the menu */
+            z-index: 2000;
             top: 0;
             left: 0;
             width: 100%;
@@ -83,179 +102,6 @@
             max-height: 90%;
             border: 5px solid white;
             box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-            object-fit: contain; /* Use 'contain' in lightbox to see the full image */
-        }
-        
-        /* Optional: Caption/Title below the image */
-        .caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.7); 
-            color: white;
-            padding: 10px;
-            text-align: center;
-            font-size: 0.9em;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 10;
-        }
-
-        .portfolio-item:hover .caption {
-            opacity: 1;
+            object-fit: contain; 
         }
     </style>
-</head>
-
-<body style="background: url(imgs/main.jpg); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; background-color: #253030;">
-
-<div class="menu">
-    <nav>
-        <ul>
-            <h1 class="title">Nick Krikunov</h1>
-            <a class="a" href="https://myw0rld.github.io/krikunov.dev/desktop/">Home</a>
-            <a class="active" href="portfolio">Portfolio</a>
-            <a class="a" href="bio">Bio</a>
-            <a class="a" href="contact">Contact</a>
-        </ul>
-    </nav>
-</div>
-
-<div style="padding: 20px; max-width: 1200px; margin: 0 auto; background-color: rgba(0, 0, 0, 0.5);">
-    <h2 class="name" style="color: white; text-align: center; padding-top: 10px;">My Photo Gallery</h2>
-
-    <main class="portfolio-grid">
-
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/main.jpg" alt="Abstract city lights reflection">
-            <div class="caption">Bus Stop</div>
-        </div>
-        
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/13.jpg" alt="Abstract city lights reflection">
-            <div class="caption">City Reflections</div>
-        </div>
-
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/12.jpg" alt="Night-time street photography">
-            <div class="caption">Urban Night</div>
-        </div>
-
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/11.jpg" alt="A portrait shot">
-            <div class="caption">Portrait</div>
-        </div>
-
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/10.jpg" alt="A shot of a building structure">
-            <div class="caption">Architecture</div>
-        </div>
-
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/9.jpg" alt="Nature close-up">
-            <div class="caption">Green Macro</div>
-        </div>
-
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/8.jpg" alt="Landscape vista">
-            <div class="caption">Landscape</div>
-        </div>
-
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/7.jpg" alt="Black and white street scene">
-            <div class="caption">Monochrome</div>
-        </div>
-
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/6.jpg" alt="A colorful sunset">
-            <div class="caption">Sunset</div>
-        </div>
-        
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/5.jpg" alt="Photo 5 description">
-            <div class="caption">Category 5</div>
-        </div>
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/4.jpg" alt="Photo 4 description">
-            <div class="caption">Category 4</div>
-        </div>
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/3.jpg" alt="Photo 3 description">
-            <div class="caption">Category 3</div>
-        </div>
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/2.jpg" alt="Photo 2 description">
-            <div class="caption">Category 2</div>
-        </div>
-        <div class="portfolio-item">
-            <img loading="lazy" src="imgs/portfolio/1.jpg" alt="Photo 1 description">
-            <div class="caption">Category 1</div>
-        </div>
-        
-        </main>
-</div>
-
-
-    <footer style="margin-top: auto;">
-        <a href="mailto:paython2796@gmail.com" class="fa fa-mail" target="_blank">✉</a>
-        <a href="https://www.linkedin.com/in/nikita-krikunov/" class="fa fa-linkedin" target="_blank"></a>
-        <p>©Nikita Krikunov</p>
-    </footer>
-    
-    <script src="java.js"></script>
-
-    <script>
-        // Function to create and manage the lightbox
-        function setupLightbox() {
-            // Select only the images that are inside the portfolio grid
-            const portfolioImages = document.querySelectorAll('.portfolio-grid .portfolio-item img');
-            
-            // Create the main lightbox element once and append it to the body
-            const lightbox = document.createElement('div');
-            lightbox.id = 'lightbox';
-            document.body.appendChild(lightbox);
-
-            // Add click listener to each image
-            portfolioImages.forEach(image => {
-                image.addEventListener('click', e => {
-                    // Stop the default action and prevent propagation
-                    e.preventDefault(); 
-                    e.stopPropagation();
-
-                    lightbox.classList.add('active'); // Show the lightbox
-
-                    // Clear previous content
-                    lightbox.innerHTML = ''; 
-
-                    // Create a copy of the clicked image
-                    const clickedImage = document.createElement('img');
-                    clickedImage.src = image.src;
-                    clickedImage.alt = image.alt;
-                    
-                    // Append the image to the lightbox
-                    lightbox.appendChild(clickedImage);
-                });
-            });
-
-            // Close the lightbox when the background is clicked
-            lightbox.addEventListener('click', e => {
-                // Only close if the click target is the dark lightbox itself, not the image inside it
-                if (e.target.id === 'lightbox') {
-                    lightbox.classList.remove('active'); // Hide the lightbox
-                }
-            });
-            
-            // Optional: Close lightbox with the ESC key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === "Escape" && lightbox.classList.contains('active')) {
-                    lightbox.classList.remove('active');
-                }
-            });
-        }
-
-        // Run the function when the page loads
-        document.addEventListener('DOMContentLoaded', setupLightbox);
-    </script>
-</body>
-</html>
