@@ -12,46 +12,62 @@
     <title>krikunov.dev - Portfolio</title>
 
     <style>
+        /* Base Styles (copied from your original to keep the context) */
         body, html {
             height: 100%;
             margin: 0;
             font: 400 15px/1.8 "Lato", sans-serif;
             color: #777;
         }
-    </style>
 
-    <style>
-        /* FIX: Ensure the outer container allows full width and centering (renamed to nk-gallery-wrapper) */
+        /* Portfolio Grid and Lightbox Styles - WITH FORCEFUL OVERRIDES */
+        /* ----------------------------------------------------------- */
+
+        /* FIX 1: Ensure the outer container is centered and large enough to hold the grid */
         .nk-gallery-wrapper {
-            padding: 20px; 
-            max-width: 1200px;
-            margin: 0 auto; 
-            background-color: rgba(0, 0, 0, 0.5);
+            /* Force the wrapper to take up space below the fixed menu */
+            padding: 90px 20px 20px 20px !important; 
+            max-width: 1300px !important; /* Slightly wider max-width for more columns */
+            width: 100% !important;
+            margin: 0 auto !important; 
+            background-color: transparent !important; /* Remove the semi-transparent black background */
         }
 
-        /* Portfolio Grid Layout: Enables responsive, equal-sized photo containers */
+        /* FIX 2: Portfolio Grid Layout - Force width and multi-column display */
         .nk-gallery-grid {
-            display: grid;
-            /* Using !important as a last resort to defeat external width constraints */
+            /* IMPORTANT: Use !important to defeat external file width constraints */
             width: 100% !important; 
             box-sizing: border-box !important;
 
-            /* Auto-fit columns, min size 300px (adjust for desired photo size) */
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
-            gap: 20px;
-            padding: 0;
-            margin: 0;
+            display: grid !important;
+            /* Auto-fit columns: Ensure multiple columns appear */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; /* slightly smaller min size to fit more columns */
+            gap: 20px !important; /* Increased gap for visual separation */
+            padding: 0 !important;
+            margin: 0 !important;
         }
 
+        /* FIX 3: Reset styling for the title wrapper to match the new layout */
+        .nk-content-header {
+            width: 100%;
+            padding: 0 20px;
+            margin-bottom: 30px; /* Space between title and grid */
+        }
+        
+        .name {
+            /* Override external margin and color to fit the current design */
+            margin: 0 !important;
+            color: #9FA07F !important;
+        }
+        
         /* Portfolio Item Container: Provides aspect ratio and hover effects */
         .nk-gallery-item {
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);  /* Deeper shadow for contrast */
             border-radius: 5px;
-            /* Placeholder sizing to prevent layout shift (CLS). */
             padding-bottom: 75%; 
-            background-color: #444; 
+            background-color: #253030;  /* Use body/footer background for consistency */
             cursor: pointer;
         }
 
@@ -78,7 +94,7 @@
             left: 0;
             right: 0;
             background: rgba(0, 0, 0, 0.7); 
-            color: white;
+            color: #ccc; /* Slightly lighter text color */
             padding: 10px;
             text-align: center;
             font-size: 0.9em;
@@ -91,7 +107,7 @@
             opacity: 1;
         }
         
-        /* Lightbox Styles: Full-screen popup for viewing the image (renamed to #nk-lightbox) */
+        /* Lightbox Styles */
         #nk-lightbox {
             position: fixed;
             z-index: 2000;
@@ -114,7 +130,7 @@
             max-width: 90%;
             max-height: 90%;
             border: 5px solid white;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
             object-fit: contain; 
         }
     </style>
@@ -135,7 +151,10 @@
 </div>
 
 <div class="nk-gallery-wrapper">
-    <h2 class="name" style="color: white; text-align: center; padding-top: 10px;">My Photo Gallery</h2>
+
+    <div class="nk-content-header">
+        <h2 class="name">My Photo Gallery</h2>
+    </div>
     
     <main class="nk-gallery-grid">
         
@@ -213,7 +232,7 @@
 </div>
 
 
-    <footer style="margin-top: auto;">
+    <footer>
         <a href="mailto:paython2796@gmail.com" class="fa fa-mail" target="_blank">✉</a>
         <a href="https://www.linkedin.com/in/nikita-krikunov/" class="fa fa-linkedin" target="_blank"></a>
         <p>©Nikita Krikunov</p>
