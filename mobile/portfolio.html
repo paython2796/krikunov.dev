@@ -240,51 +240,57 @@
 	<script src="java.js"></script>
 	<script src="menu.js"></script>
 
-    <script>
-        function setupLightbox() {
-            // Select only the images that are inside the new grid
-            const portfolioImages = document.querySelectorAll('.nk-gallery-grid .nk-gallery-item img');
-            
-            // Create the main lightbox element once (using new ID)
-            const lightbox = document.createElement('div');
-            lightbox.id = 'nk-lightbox';
-            document.body.appendChild(lightbox);
+    <script>
+        function setupLightbox() {
+            // Select only the images that are inside the new grid
+            const portfolioImages = document.querySelectorAll('.nk-gallery-grid .nk-gallery-item img');
+            
+            // Create the main lightbox element once (using new ID)
+            const lightbox = document.createElement('div');
+            lightbox.id = 'nk-lightbox';
+            document.body.appendChild(lightbox);
 
-            // Add click listener to each image
-            portfolioImages.forEach(image => {
-                image.addEventListener('click', e => {
-                    e.preventDefault(); 
-                    e.stopPropagation();
+            // Add click listener to each image
+            portfolioImages.forEach(image => {
+                image.addEventListener('click', e => {
+                    e.preventDefault(); 
+                    e.stopPropagation();
 
-                    lightbox.classList.add('active'); 
+                    lightbox.classList.add('active'); 
 
-                    lightbox.innerHTML = ''; 
+                    lightbox.innerHTML = ''; 
 
-                    // Create a copy of the clicked image for the lightbox view
-                    const clickedImage = document.createElement('img');
-                    clickedImage.src = image.src;
-                    clickedImage.alt = image.alt;
+                    // Create a copy of the clicked image for the lightbox view
+                    const clickedImage = document.createElement('img');
+                    clickedImage.src = image.src;
+                    clickedImage.alt = image.alt;
+                    
+                    // NOWY KOD: Dodajemy funkcję zamykania po kliknięciu na SAMO ZDJĘCIE
+                    clickedImage.addEventListener('click', () => {
+                        lightbox.classList.remove('active');
+                    });
                     
-                    lightbox.appendChild(clickedImage);
-                });
-            });
+                    lightbox.appendChild(clickedImage);
+                });
+            });
 
-            // Close the lightbox when the dark background is clicked (using new ID)
-            lightbox.addEventListener('click', e => {
-                if (e.target.id === 'nk-lightbox') {
-                    lightbox.classList.remove('active'); 
-                }
-            });
-            
-            // Optional: Close lightbox with the ESC key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === "Escape" && lightbox.classList.contains('active')) {
-                    lightbox.classList.remove('active');
-                }
-            });
-        }
+            // Close the lightbox when the dark background is clicked (using new ID)
+            lightbox.addEventListener('click', e => {
+                // Ta część już działała, zamykając lightbox po kliknięciu na tło (e.target.id === 'nk-lightbox')
+                if (e.target.id === 'nk-lightbox') {
+                    lightbox.classList.remove('active'); 
+                }
+            });
+            
+            // Optional: Close lightbox with the ESC key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape" && lightbox.classList.contains('active')) {
+                    lightbox.classList.remove('active');
+                }
+            });
+        }
 
-        document.addEventListener('DOMContentLoaded', setupLightbox);
-    </script>
+        document.addEventListener('DOMContentLoaded', setupLightbox);
+    </script>
 </body>
 </html>
